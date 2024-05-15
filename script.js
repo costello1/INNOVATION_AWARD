@@ -10,14 +10,19 @@ function getCookie(name) {
 // Funzione per impostare un cookie
 function setCookie(name, value, days) {
     const date = new Date();
-    date.setTime(date.getTime() + (days*24*60*60*1000));
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
     const expires = `expires=${date.toUTCString()}`;
     document.cookie = `${name}=${value};${expires};path=/`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('quizForm');
-    const userId = getCookie('userId'); // Ottieni l'ID utente dal cookie
+    let userId = getCookie('userId'); // Ottieni l'ID utente dal cookie
+
+    if (!userId) {
+        userId = `user-${Math.random().toString(36).substr(2, 9)}`;
+        setCookie('userId', userId, 365);
+    }
 
     // Controlla se l'utente ha già risposto
     const checkUserSubmission = async () => {
@@ -26,22 +31,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return data.hasSubmitted;
     };
 
-    if (userId) {
-        checkUserSubmission().then(hasSubmitted => {
-            if (hasSubmitted) {
-                window.location.href = "already-answered.html";
-            }
-        });
-    } else {
-        const newUserId = `user-${Math.random().toString(36).substr(2, 9)}`;
-        setCookie('userId', newUserId, 365);
-    }
+    checkUserSubmission().then(hasSubmitted => {
+        if (hasSubmitted) {
+            window.location.href = "already-answered.html";
+        }
+    });
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const selectedAnswer = document.querySelector('input[name="answer"]:checked');
-        const userId = getCookie('userId');
+        userId = getCookie('userId'); // Ricarica il cookie per assicurarsi che sia aggiornato
 
         if (selectedAnswer) {
             const answerValue = selectedAnswer.value;
