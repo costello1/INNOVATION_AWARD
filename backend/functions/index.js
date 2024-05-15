@@ -1,12 +1,3 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
 const {onRequest} = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
 
@@ -16,6 +7,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
+// Configura il middleware CORS
 app.use(cors({origin: true}));
 app.use(express.json());
 
@@ -58,6 +50,18 @@ app.post("/answers", (req, res) => {
   }
   answers[answer] += 1;
 
+  res.json({success: true});
+});
+
+// Endpoint per ripristinare lo stato di tutti gli utenti
+app.post("/reset-users", (req, res) => {
+  console.log("Resetting user states");
+  for (const userId in users) {
+    if (Object.prototype.hasOwnProperty.call(users, userId)) {
+      users[userId].hasSubmitted = false;
+      console.log(`Reset user ${userId}`);
+    }
+  }
   res.json({success: true});
 });
 
