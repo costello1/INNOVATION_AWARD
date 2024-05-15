@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reimposta Risposte</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Reimposta Risposte</h1>
+        <p>I tuoi cookie sono stati cancellati. Puoi rispondere nuovamente al questionario.</p>
+    </div>
+    <script>
+        function deleteCookie(name) {
+            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+        }
+
+        // Cancellare il cookie 'hasSubmitted'
+        deleteCookie('hasSubmitted');
+
+        // Altri eventuali cookie da cancellare
+        // deleteCookie('anotherCookieName');
+    </script>
+</body>
+</html>

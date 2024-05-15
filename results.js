@@ -1,7 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const ctx = document.getElementById('resultsChart').getContext('2d');
 
-    const answers = JSON.parse(localStorage.getItem('answers')) || {};
+    // Ottieni i dati delle risposte dal backend
+    const response = await fetch('http://localhost:3000/answers');
+    const answers = await response.json();
+
     const labels = Object.keys(answers);
     const data = Object.values(answers);
 
