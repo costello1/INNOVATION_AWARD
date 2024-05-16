@@ -10,15 +10,10 @@
         function preventBack() {
             history.pushState(null, '', location.href);
             window.onpopstate = function () {
-                history.pushState(null, '', location.href);
+                // Reindirizza a already-answered.html se l'utente prova a tornare indietro
+                window.location.href = 'already-answered.html';
             };
         }
-
-        // Mostra un avviso quando l'utente tenta di navigare via dalla pagina
-        window.addEventListener('beforeunload', function(event) {
-            event.preventDefault();
-            event.returnValue = 'Sei sicuro di voler lasciare questa pagina? I tuoi progressi potrebbero non essere salvati.';
-        });
 
         // Impedisci il ritorno indietro quando la pagina viene caricata
         document.addEventListener('DOMContentLoaded', preventBack);
