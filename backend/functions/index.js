@@ -13,7 +13,7 @@ app.use(express.json());
 
 // Simula un database in memoria per memorizzare gli utenti e le risposte
 const users = {};
-const answers = {};
+let answers = {}; // Usa let invece di const per poter riassegnare
 
 // Endpoint per controllare se un utente ha già risposto
 app.get("/user/:id", (req, res) => {
@@ -44,6 +44,12 @@ app.get("/answers", (req, res) => {
 // Endpoint per aggiornare le risposte
 app.post("/answers", (req, res) => {
   const {answer} = req.body;
+
+  if (answer === "RESET") {
+    answers = {}; // Resetta le risposte
+    res.json({success: true});
+    return;
+  }
 
   if (!answers[answer]) {
     answers[answer] = 0;

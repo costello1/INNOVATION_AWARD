@@ -1,5 +1,3 @@
-const API_BASE_URL = 'https://api-7524dbiyoq-uc.a.run.app'; // Usa l'URL delle tue funzioni Firebase
-
 // Funzione per ottenere il valore di un cookie
 function getCookie(name) {
     const value = `; ${document.cookie}`;

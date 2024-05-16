@@ -1,20 +1,26 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const ctx = document.getElementById('resultsChart').getContext('2d');
 
-    // Ottieni i dati delle risposte dal backend
-    const response = await fetch('https://api-7524dbiyoq-uc.a.run.app/answers');
-    const answers = await response.json();
+    // Funzione per ottenere i dati delle risposte dal backend
+    const fetchData = async () => {
+        const response = await fetch('https://api-7524dbiyoq-uc.a.run.app/answers');
+        const answers = await response.json();
+        return answers;
+    };
 
-    const labels = Object.keys(answers);
-    const data = Object.values(answers);
+    // Inizializza il grafico
+    let chart;
 
-    if (labels.length === 0) {
-        document.getElementById('resultsChart').style.display = 'none';
-        const message = document.createElement('p');
-        message.textContent = 'Non ci sono dati disponibili per il grafico.';
-        document.querySelector('.container').appendChild(message);
-    } else {
-        new Chart(ctx, {
+    const updateChart = async () => {
+        const answers = await fetchData();
+        const labels = Object.keys(answers);
+        const data = Object.values(answers);
+
+        if (chart) {
+            chart.destroy(); // Distruggi il grafico esistente prima di crearne uno nuovo
+        }
+
+        chart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: labels,
@@ -36,6 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'top',
@@ -44,7 +51,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         callbacks: {
                             label: function(context) {
                                 let label = context.label || '';
-
                                 if (label) {
                                     label += ': ';
                                 }
@@ -58,5 +64,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
         });
-    }
+    };
+
+    updateChart(); // Aggiorna il grafico all'avvio
+
+    // Funzione per aggiornare il grafico periodicamente
+    setInterval(updateChart, 3000); // Aggiorna ogni 5 secondi
 });
