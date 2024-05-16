@@ -5,13 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Risultati</title>
     <link rel="stylesheet" href="results.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Risultati del Questionario</h1>
-        <canvas id="resultsChart"></canvas>
+        <table id="leaderboard">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Risposta</th>
+                    <th>Conteggio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- I dati della leaderboard saranno inseriti qui da JavaScript -->
+            </tbody>
+        </table>
     </div>
+    <button id="toggleAnswers">Risposte</button>
     <script src="results.js"></script>
 </body>
 </html>
