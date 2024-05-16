@@ -6,14 +6,30 @@
     <title>Questionario</title>
     <link rel="stylesheet" href="index.css">
     <script>
-        // Funzione per ottenere il valore di un cookie
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userId = getCookie('userId') || generateUserId();
+            const response = await fetch(`https://api-7524dbiyoq-uc.a.run.app/api/user/${userId}`);
+            const data = await response.json();
+
+            if (data.hasSubmitted) {
+                window.location.href = 'already-answered.html';
+            }
+
+            // Aggiungi un gestore per l'evento popstate per ricaricare la pagina
+            window.addEventListener('popstate', () => {
+                // Se la pagina corrente è index.html, ricarica la pagina
+                if (location.pathname.endsWith('index.html')) {
+                    location.reload();
+                }
+            });
+        });
+
         function getCookie(name) {
             const value = `; ${document.cookie}`;
             const parts = value.split(`; ${name}=`);
             if (parts.length === 2) return parts.pop().split(';').shift();
         }
 
-        // Funzione per impostare un cookie
         function setCookie(name, value, days) {
             const date = new Date();
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -21,33 +37,11 @@
             document.cookie = `${name}=${value};${expires};path=/`;
         }
 
-        // Funzione per generare un ID utente univoco
         function generateUserId() {
             const userId = `user-${Math.random().toString(36).substr(2, 9)}`;
             setCookie('userId', userId, 365);
             return userId;
         }
-
-        // Funzione per controllare se l'utente ha già risposto
-        async function checkUserSubmission() {
-            const userId = getCookie('userId') || generateUserId();
-            const response = await fetch(`https://api-7524dbiyoq-uc.a.run.app/user/${userId}`);
-            const data = await response.json();
-            if (data.hasSubmitted) {
-                window.location.href = 'already-answered.html';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            checkUserSubmission();
-
-            // Aggiungi un listener per l'evento popstate
-            window.onpopstate = function () {
-                if (location.pathname.endsWith('index.html')) {
-                    checkUserSubmission();
-                }
-            };
-        });
     </script>
 </head>
 <body>
