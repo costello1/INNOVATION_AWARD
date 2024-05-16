@@ -15,6 +15,7 @@ function setCookie(name, value, days) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('quizForm');
+    const submitButton = form.querySelector('button[type="submit"]');
     let userId = getCookie('userId'); // Ottieni l'ID utente dal cookie
 
     if (!userId) {
@@ -29,11 +30,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return data.hasSubmitted;
     };
 
-    checkUserSubmission().then(hasSubmitted => {
+    const periodicCheck = async () => {
+        const hasSubmitted = await checkUserSubmission();
         if (hasSubmitted) {
-            window.location.href = "already-answered.html";
+            submitButton.disabled = true;
+            window.location.href = "thankyou.html";
         }
-    });
+    };
+
+    // Avvia il controllo periodico ogni secondo
+    setInterval(periodicCheck, 1000);
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
