@@ -8,7 +8,7 @@
     <script>
         // Funzione per impedire l'accesso a determinate pagine
         function preventAccess() {
-            const forbiddenUrls = ['index.html']; // Aggiungi gli URL che vuoi bloccare
+            const forbiddenUrls = ['https://costello1.github.io/Innovation_award/index.html']; // Aggiungi gli URL che vuoi bloccare
             forbiddenUrls.forEach(url => {
                 if (document.referrer.includes(url)) {
                     window.location.href = 'thankyou.html';
