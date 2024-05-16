@@ -8,21 +8,58 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const userId = getCookie('userId') || generateUserId();
-            const response = await fetch(`https://api-7524dbiyoq-uc.a.run.app/api/user/${userId}`);
-            const data = await response.json();
+            const userStatus = await checkUserSubmission(userId);
 
-            if (data.hasSubmitted) {
+            if (userStatus.hasSubmitted) {
                 window.location.href = 'already-answered.html';
             }
 
-            // Aggiungi un gestore per l'evento popstate per ricaricare la pagina
+            const form = document.getElementById('quizForm');
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                if (userStatus.hasSubmitted) {
+                    window.location.href = 'thankyou.html';
+                } else {
+                    const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+                    if (selectedAnswer) {
+                        const answerValue = selectedAnswer.value;
+
+                        // Invia la risposta al backend
+                        await fetch(`https://api-7524dbiyoq-uc.a.run.app/answers`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ answer: answerValue })
+                        });
+
+                        // Aggiorna lo stato dell'utente nel backend
+                        await fetch(`https://api-7524dbiyoq-uc.a.run.app/user/${userId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ hasSubmitted: true })
+                        });
+
+                        window.location.href = 'thankyou.html';
+                    } else {
+                        alert("Seleziona una risposta prima di inviare.");
+                    }
+                }
+            });
+
             window.addEventListener('popstate', () => {
-                // Se la pagina corrente è index.html, ricarica la pagina
                 if (location.pathname.endsWith('index.html')) {
                     location.reload();
                 }
             });
         });
+
+        async function checkUserSubmission(userId) {
+            const response = await fetch(`https://api-7524dbiyoq-uc.a.run.app/user/${userId}`);
+            return await response.json();
+        }
 
         function getCookie(name) {
             const value = `; ${document.cookie}`;
