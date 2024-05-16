@@ -8,10 +8,13 @@
     <script>
         // Funzione per impedire il ritorno indietro
         function preventBack() {
+            // Sovrascrive l'ultima voce della cronologia
+            history.replaceState(null, '', location.href);
+            // Aggiunge una nuova voce alla cronologia
             history.pushState(null, '', location.href);
             window.onpopstate = function () {
-                // Reindirizza a already-answered.html se l'utente prova a tornare indietro
-                window.location.href = 'already-answered.html';
+                // Rimani sulla stessa pagina se l'utente prova a tornare indietro
+                history.pushState(null, '', location.href);
             };
         }
 
