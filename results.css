@@ -1,0 +1,46 @@
+/* Resetta margini e padding per tutti gli elementi */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Stile del body */
+body, html {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* Contenitore principale */
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Titolo del questionario */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #e60000; /* Rosso */
+}
+
+/* Stile per il canvas del grafico */
+canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 600px;
+    max-height: 600px;
+    margin: 0 auto;
+    display: block;
+}

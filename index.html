@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questionario</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index.css">
+    <script>
+        // Controlla se l'utente ha già visitato la pagina di benvenuto
+        if (!localStorage.getItem('visitedWelcomePage')) {
+            window.location.href = 'welcome.html';
+        }
+    </script>
 </head>
 <body>
     <div class="container">
