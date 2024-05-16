@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Già Risposto</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        // Gestione della cronologia per impedire il ritorno indietro
+        function manageHistory() {
+            history.pushState(null, '', location.href);
+            window.onpopstate = function(event) {
+                history.pushState(null, '', location.href);
+            };
+        }
+
+        // Impedisci il ritorno indietro quando la pagina viene caricata
+        document.addEventListener('DOMContentLoaded', manageHistory);
+    </script>
 </head>
 <body>
     <div class="container">

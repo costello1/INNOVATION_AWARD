@@ -51,8 +51,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     setTimeout(() => {
                         currentRow.style.transform = 'translateY(0)';
                         currentRow.querySelector('.rank').textContent = newIndex + 1;
+                        currentRow.querySelector('.count').textContent = newRow.querySelector('.count').textContent;
                         leaderboard.insertBefore(currentRow, leaderboard.children[newIndex]);
                     }, 500);
+                } else {
+                    currentRow.querySelector('.count').textContent = newRow.querySelector('.count').textContent;
                 }
             } else {
                 newRow.style.transform = 'translateY(-20px)';
@@ -77,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateLeaderboard(); // Aggiorna la leaderboard all'avvio
 
     // Funzione per aggiornare la leaderboard periodicamente
-    setInterval(updateLeaderboard, 3000); // Aggiorna ogni 3 secondi
+    setInterval(updateLeaderboard, 2000); // Aggiorna ogni 3 secondi
 
     // Listener per il pulsante delle risposte
     toggleAnswersButton.addEventListener('click', () => {

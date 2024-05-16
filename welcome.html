@@ -11,6 +11,18 @@
             localStorage.setItem('visitedWelcomePage', 'true');
         });
     </script>
+    <script>
+        // Gestione della cronologia per impedire il ritorno indietro
+        function manageHistory() {
+            history.pushState(null, '', location.href);
+            window.onpopstate = function(event) {
+                history.pushState(null, '', location.href);
+            };
+        }
+
+        // Impedisci il ritorno indietro quando la pagina viene caricata
+        document.addEventListener('DOMContentLoaded', manageHistory);
+    </script>
 </head>
 <body>
     <div class="container">
