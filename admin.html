@@ -5,27 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amministrazione</title>
     <link rel="stylesheet" href="styles.css">
-    <script>
-        // Funzione per impedire il ritorno indietro
-        function preventBack() {
-            history.pushState(null, '', location.href);
-            window.onpopstate = function () {
-                history.pushState(null, '', location.href);
-            };
-        }
-
-        // Mostra un avviso quando l'utente tenta di navigare via dalla pagina
-        window.addEventListener('beforeunload', function(event) {
-            event.preventDefault();
-            event.returnValue = 'Sei sicuro di voler lasciare questa pagina? I tuoi progressi potrebbero non essere salvati.';
-        });
-
-        // Impedisci il ritorno indietro quando la pagina viene caricata
-        document.addEventListener('DOMContentLoaded', preventBack);
-
-        // Rinnova il blocco del tasto indietro quando l'utente naviga avanti
-        setInterval(preventBack, 100);
-    </script>
 </head>
 <body>
     <div class="container">
