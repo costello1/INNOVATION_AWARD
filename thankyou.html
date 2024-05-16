@@ -11,7 +11,7 @@
             const forbiddenUrls = ['index.html']; // Aggiungi gli URL che vuoi bloccare
             forbiddenUrls.forEach(url => {
                 if (document.referrer.includes(url)) {
-                    window.location.href = 'already-answered.html';
+                    window.location.href = 'thankyou.html';
                 }
             });
         }

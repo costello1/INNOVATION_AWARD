@@ -6,25 +6,31 @@
     <title>Già Risposto</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-        // Funzione per impedire il ritorno indietro
-        function preventBack() {
+        // Funzione per impedire l'accesso a determinate pagine
+        function preventAccess() {
+            const forbiddenUrls = ['index.html']; // Aggiungi gli URL che vuoi bloccare
+            forbiddenUrls.forEach(url => {
+                if (document.referrer.includes(url)) {
+                    window.location.href = 'already-answered.html';
+                }
+            });
+        }
+
+        // Impedisci l'accesso quando la pagina viene caricata
+        document.addEventListener('DOMContentLoaded', () => {
+            preventAccess();
+            history.replaceState(null, '', location.href);
             history.pushState(null, '', location.href);
             window.onpopstate = function () {
                 history.pushState(null, '', location.href);
             };
-        }
-
-        // Mostra un avviso quando l'utente tenta di navigare via dalla pagina
-        window.addEventListener('beforeunload', function(event) {
-            event.preventDefault();
-            event.returnValue = 'Sei sicuro di voler lasciare questa pagina? I tuoi progressi potrebbero non essere salvati.';
         });
 
-        // Impedisci il ritorno indietro quando la pagina viene caricata
-        document.addEventListener('DOMContentLoaded', preventBack);
-
         // Rinnova il blocco del tasto indietro quando l'utente naviga avanti
-        setInterval(preventBack, 100);
+        setInterval(() => {
+            history.replaceState(null, '', location.href);
+            history.pushState(null, '', location.href);
+        }, 100);
     </script>
 </head>
 <body>
