@@ -47,30 +47,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedAnswer = document.querySelector('input[name="answer"]:checked');
         userId = getCookie('userId'); // Ricarica il cookie per assicurarsi che sia aggiornato
 
-        if (selectedAnswer) {
-            const answerValue = selectedAnswer.value;
-
-            // Salva la risposta nel backend
-            await fetch(`https://api-7524dbiyoq-uc.a.run.app/answers`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ answer: answerValue })
-            });
-
-            // Aggiorna lo stato dell'utente nel backend
-            await fetch(`https://api-7524dbiyoq-uc.a.run.app/user/${userId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ hasSubmitted: true })
-            });
-
+        const hasSubmitted = await checkUserSubmission();
+        if (hasSubmitted) {
             window.location.href = "thankyou.html";
         } else {
-            alert("Seleziona una risposta prima di inviare.");
+            if (selectedAnswer) {
+                const answerValue = selectedAnswer.value;
+
+                // Salva la risposta nel backend
+                await fetch(`https://api-7524dbiyoq-uc.a.run.app/answers`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ answer: answerValue })
+                });
+
+                // Aggiorna lo stato dell'utente nel backend
+                await fetch(`https://api-7524dbiyoq-uc.a.run.app/user/${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ hasSubmitted: true })
+                });
+
+                window.location.href = "thankyou.html";
+            } else {
+                alert("Seleziona una risposta prima di inviare.");
+            }
         }
     });
 });
