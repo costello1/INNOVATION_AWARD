@@ -20,7 +20,7 @@ body, html {
 
 /* Contenitore principale */
 .container {
-    height: 96vh;
+    height: 80vh;
     text-align: center;
     margin-top: 2vh;
     width: 90%;
@@ -35,7 +35,7 @@ body, html {
 }
 
 #quizForm{
-    margin-bottom: 30vh;
+    
 }
 
 /* Titolo del questionario */
