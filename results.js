@@ -89,6 +89,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         answers.forEach(answer => {
             answer.style.filter = showAnswers ? 'none' : 'blur(5px)';
         });
-        toggleAnswersButton.textContent = showAnswers ? 'Nascondi Risposte' : 'Risposte';
+        toggleAnswersButton.textContent = showAnswers ? 'Hide' : 'Show';
     });
 });
